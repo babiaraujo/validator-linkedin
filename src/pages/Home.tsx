@@ -34,7 +34,7 @@ const Home = () => {
       console.log("[HOME] Email found in URL parameters:", emailParam);
       setUserEmail(emailParam);
       
-      // Hide header when show-header=true OR header=true
+      // Set hideHeader to true if show-header=true OR header=true
       if (showHeaderParam === "true" || headerParam === "true") {
         console.log("[HOME] Header hiding parameter detected");
         setHideHeader(true);
@@ -102,6 +102,9 @@ const Home = () => {
         if (hideHeader) {
           // Using show-header=true to hide the header
           queryParams = queryParams ? `${queryParams}&show-header=true` : '?show-header=true';
+        } else {
+          // Explicitly set show-header=false when we want to show the header
+          queryParams = queryParams ? `${queryParams}&show-header=false` : '?show-header=false';
         }
         
         // Add email parameter if available
@@ -137,7 +140,7 @@ const Home = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-b from-white to-blue-50">
-      <Header />
+      {!hideHeader && <Header />}
       
       <main className="flex-grow flex flex-col items-center justify-center px-4 bg-slate-100">
         <div className="max-w-5xl w-full text-center mb-52 mx-0 px-0 my-0 py-0">
@@ -173,7 +176,7 @@ const Home = () => {
         </div>
       </main>
       
-      <Footer />
+      {!hideHeader && <Footer />}
       
       {/* Email Modal */}
       <EmailModal 

@@ -30,12 +30,13 @@ const Results = () => {
       setUserEmail(emailParam);
     }
     
-    // Hide header when show-header=true OR header=true
-    // Show header when show-header=false or parameter is not present
+    // Check if we should hide the header
+    // If show-header=true, hide the header
     if (showHeaderParam === "true" || headerParam === "true") {
       console.log("[RESULTS] Hiding header based on URL parameter");
       setShowHeader(false);
     } else {
+      // For any other value or if not present, show the header
       setShowHeader(true);
     }
     
