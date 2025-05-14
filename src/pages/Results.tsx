@@ -31,7 +31,8 @@ const Results = () => {
     }
     
     // Check both header parameters (supporting both formats)
-    if (showHeaderParam === "false" || headerParam === "true") {
+    // Now also hide header when show-header=true
+    if (showHeaderParam === "false" || showHeaderParam === "true" || headerParam === "true") {
       console.log("[RESULTS] Hiding header based on URL parameter");
       setShowHeader(false);
     }

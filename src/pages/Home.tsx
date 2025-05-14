@@ -35,7 +35,8 @@ const Home = () => {
       setUserEmail(emailParam);
       
       // Check header parameters (supporting both formats)
-      if (showHeaderParam === "false" || headerParam === "true") {
+      // Now also checking for show-header=true
+      if (showHeaderParam === "false" || showHeaderParam === "true" || headerParam === "true") {
         console.log("[HOME] Header hiding parameter detected");
         setHideHeader(true);
         setAutoRedirect(true);
@@ -100,7 +101,8 @@ const Home = () => {
         
         // If hide header is enabled, pass the appropriate parameter
         if (hideHeader) {
-          queryParams = queryParams ? `${queryParams}&header=true` : '?header=true';
+          // Using show-header=true as requested by the user
+          queryParams = queryParams ? `${queryParams}&show-header=true` : '?show-header=true';
         }
         
         // Add email parameter if available
@@ -126,7 +128,6 @@ const Home = () => {
     }
   };
 
-  // Handle email submission from modal
   const handleEmailSubmit = (email: string) => {
     setUserEmail(email);
     setShowEmailModal(false);
