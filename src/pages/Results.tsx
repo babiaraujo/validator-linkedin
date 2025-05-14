@@ -23,13 +23,15 @@ const Results = () => {
     const queryParams = new URLSearchParams(window.location.search);
     const emailParam = queryParams.get("email");
     const showHeaderParam = queryParams.get("show-header");
+    const headerParam = queryParams.get("header");
     
     if (emailParam) {
       console.log("[RESULTS] Found email in URL parameters:", emailParam);
       setUserEmail(emailParam);
     }
     
-    if (showHeaderParam === "false") {
+    // Check both header parameters (supporting both formats)
+    if (showHeaderParam === "false" || headerParam === "true") {
       console.log("[RESULTS] Hiding header based on URL parameter");
       setShowHeader(false);
     }

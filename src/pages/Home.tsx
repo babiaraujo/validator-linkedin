@@ -17,6 +17,7 @@ const Home = () => {
   const [showEmailModal, setShowEmailModal] = useState(false);
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [autoRedirect, setAutoRedirect] = useState(false);
+  const [hideHeader, setHideHeader] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const { toast } = useToast();
@@ -26,15 +27,17 @@ const Home = () => {
     const queryParams = new URLSearchParams(location.search);
     const emailParam = queryParams.get("email");
     const showHeaderParam = queryParams.get("show-header");
+    const headerParam = queryParams.get("header");
     
     // Store email from URL parameter if present
     if (emailParam) {
       console.log("[HOME] Email found in URL parameters:", emailParam);
       setUserEmail(emailParam);
       
-      // Check if there's also a show-header parameter
-      if (showHeaderParam === "false") {
-        console.log("[HOME] show-header=false parameter detected");
+      // Check header parameters (supporting both formats)
+      if (showHeaderParam === "false" || headerParam === "true") {
+        console.log("[HOME] Header hiding parameter detected");
+        setHideHeader(true);
         setAutoRedirect(true);
       }
     }
@@ -92,13 +95,22 @@ const Home = () => {
           userEmail
         };
         
-        // If auto-redirect is enabled, pass the show-header parameter
-        const queryParams = autoRedirect ? `?show-header=false` : '';
+        // Build query params based on available options
+        let queryParams = '';
+        
+        // If hide header is enabled, pass the appropriate parameter
+        if (hideHeader) {
+          queryParams = queryParams ? `${queryParams}&header=true` : '?header=true';
+        }
         
         // Add email parameter if available
-        const emailParam = userEmail ? `${queryParams ? '&' : '?'}email=${encodeURIComponent(userEmail)}` : '';
+        if (userEmail) {
+          queryParams = queryParams 
+            ? `${queryParams}&email=${encodeURIComponent(userEmail)}` 
+            : `?email=${encodeURIComponent(userEmail)}`;
+        }
         
-        navigate(`${resultPath}${queryParams}${emailParam}`, {
+        navigate(`${resultPath}${queryParams}`, {
           state: navigationState
         });
       }
