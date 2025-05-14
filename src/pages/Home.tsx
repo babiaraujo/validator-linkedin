@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
@@ -33,7 +34,7 @@ const Home = () => {
       console.log("[HOME] Email found in URL parameters:", emailParam);
       setUserEmail(emailParam);
       
-      // Only hide header when show-header=true OR header=true
+      // Hide header when show-header=true OR header=true
       if (showHeaderParam === "true" || headerParam === "true") {
         console.log("[HOME] Header hiding parameter detected");
         setHideHeader(true);

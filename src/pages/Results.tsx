@@ -30,11 +30,13 @@ const Results = () => {
       setUserEmail(emailParam);
     }
     
-    // Only hide header when show-header=true OR header=true
-    // If show-header=false, we should show the header (not hide it)
+    // Hide header when show-header=true OR header=true
+    // Show header when show-header=false or parameter is not present
     if (showHeaderParam === "true" || headerParam === "true") {
       console.log("[RESULTS] Hiding header based on URL parameter");
       setShowHeader(false);
+    } else {
+      setShowHeader(true);
     }
     
     // Then check URL from location state (from navigation)
